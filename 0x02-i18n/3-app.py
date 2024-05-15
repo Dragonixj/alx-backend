@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" Task 2: Basic Babel Setup"""
+"""Task 3: Parametizze templates """
 from flask import Flask, render_template, request
 from flask_babel import Babel
 
