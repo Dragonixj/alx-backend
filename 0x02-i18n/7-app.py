@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """Task 7: Infer the appropriate timezone"""
+from typing import Dict, Union
+
 from flask import Flask, g, render_template, request
 from flask_babel import Babel
 from pytz import UnknownTimeZoneError, timezone
@@ -25,7 +27,7 @@ users = {
 }
 
 
-def get_user():
+def get_user() -> Union[Dict, None]:
     """Find a user using ID"""
     login_as = request.args.get("login_as")
     if not login_as or int(login_as) not in users:
@@ -34,13 +36,13 @@ def get_user():
 
 
 @app.before_request
-def before_request():
+def before_request() -> None:
     """Check login user"""
     g.user = get_user()
 
 
 @babel.localeselector
-def get_locale():
+def get_locale() -> str:
     """Finds the best matching language"""
     locale = request.args.get("locale")
     if locale in app.config["LANGUAGES"]:
@@ -51,7 +53,7 @@ def get_locale():
 
 
 @babel.timezoneselector
-def get_timezone():
+def get_timezone() -> str:
     """use the appropriate timezone"""
     try:
         if request.args.get("timezone"):
@@ -64,7 +66,7 @@ def get_timezone():
 
 
 @app.route("/")
-def index():
+def index() -> str:
     """Entry point route"""
     return render_template("7-index.html")
 
