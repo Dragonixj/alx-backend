@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Task 3: Parametizze templates """
+"""Task 3: Force locale with URL parameter"""
 from flask import Flask, render_template, request
 from flask_babel import Babel
 
@@ -29,7 +29,7 @@ def get_locale():
 @app.route("/")
 def index():
     """Entry point route"""
-    return render_template("2-index.html")
+    return render_template("4-index.html")
 
 
 if __name__ == "__main__":
