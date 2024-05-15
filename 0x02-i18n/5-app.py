@@ -34,6 +34,7 @@ def get_user():
 
 @app.before_request
 def before_request():
+    """Check login user"""
     g.user = get_user()
 
 
