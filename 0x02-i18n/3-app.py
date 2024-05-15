@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Task 3: Parametizze templates """
+"""Task 3: Parametize templates """
 from flask import Flask, render_template, request
 from flask_babel import Babel
 

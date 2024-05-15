@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Task 3: Force locale with URL parameter"""
+"""Task 5: Emulating login system"""
 from flask import Flask, g, render_template, request
 from flask_babel import Babel
 
