@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""Task 6: Use user locale"""
+"""Task 7: Infer the appropriate timezone"""
 from flask import Flask, g, render_template, request
 from flask_babel import Babel
+from pytz import UnknownTimeZoneError, timezone
 
 
 class Config:
@@ -49,10 +50,23 @@ def get_locale():
     return request.accept_languages.best_match(app.config["LANGUAGES"])
 
 
+@babel.timezoneselector
+def get_timezone():
+    """use the appropriate timezone"""
+    try:
+        if request.args.get("timezone"):
+            return timezone(request.args.get("timezone"))
+        if g.user:
+            return timezone(g.user.get("timezone"))
+    except UnknownTimeZoneError:
+        pass
+    return "UTC"
+
+
 @app.route("/")
 def index():
     """Entry point route"""
-    return render_template("6-index.html")
+    return render_template("7-index.html")
 
 
 if __name__ == "__main__":
