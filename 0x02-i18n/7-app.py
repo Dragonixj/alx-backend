@@ -2,9 +2,9 @@
 """Task 7: Infer the appropriate timezone"""
 from typing import Dict, Union
 
+import pytz
 from flask import Flask, g, render_template, request
 from flask_babel import Babel
-from pytz import UnknownTimeZoneError, timezone
 
 
 class Config:
@@ -55,14 +55,13 @@ def get_locale() -> str:
 @babel.timezoneselector
 def get_timezone() -> str:
     """use the appropriate timezone"""
+    time_zone = request.args.get("timezone", None)
+    if time_zone is None and g.user:
+        time_zone = g.user["timezone"]
     try:
-        if request.args.get("timezone"):
-            return timezone(request.args.get("timezone"))
-        if g.user:
-            return timezone(g.user.get("timezone"))
-    except UnknownTimeZoneError:
-        pass
-    return "UTC"
+        return pytz.timezone(time_zone).zone
+    except pytz.exceptions.UnknownTimeZoneError:
+        return "UTC"
 
 
 @app.route("/")
