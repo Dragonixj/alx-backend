@@ -2,13 +2,11 @@ import redis from 'redis';
 
 const client = redis.createClient();
 
-client.on('error', (err) => {
-    console.log('Redis client not connected to the server', err);
-});
+client.on('error', (err) =>
+    console.log('Redis client not connected to the server', err),
+);
 
-client.on('connect', () => {
-    console.log('Redis client connected to the server');
-});
+client.on('connect', () => console.log('Redis client connected to the server'));
 
 client.hset('HolbertonSchools', 'Portland', 50, redis.print);
 client.hset('HolbertonSchools', 'Seattle', 80, redis.print);
@@ -19,6 +17,6 @@ client.hset('HolbertonSchools', 'Paris', 2, redis.print);
 
 client.hgetall('HolbertonSchools', (err, res) => {
     if (err) throw err;
-    console.log(err);
+    console.log(res);
     client.quit();
 });
